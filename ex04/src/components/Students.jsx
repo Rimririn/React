@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Row, Table } from "react-bootstrap";
+import { Col, Row, Table, Button } from "react-bootstrap";
 
 const Students = () => {
   const [students, setStudents] = useState([
@@ -19,6 +19,17 @@ const Students = () => {
       dept: "전기과",
     },
   ]);
+
+  const onDelete = (student) => {
+    if (window.confirm(`${student.name} 학생을 삭제하시겠습니까?`)) {
+      // const newStudents = student.filter((s) => s.no !== student.no);
+
+      // setStudents(newStudents);
+
+      setStudents(students.filter((s) => s.no !== student.no));
+    }
+  };
+
   return (
     <div>
       <h1>학생관리</h1>
@@ -30,14 +41,20 @@ const Students = () => {
                 <td>학번</td>
                 <td>이름</td>
                 <td>학과</td>
+                <td>삭제</td>
               </tr>
             </thead>
             <tbody>
               {students.map((s) => (
-                <tr>
+                <tr key={s.no}>
                   <td>{s.no}</td>
                   <td>{s.name}</td>
                   <td>{s.dept}</td>
+                  <td>
+                    <Button variant="danger" onClick={() => onDelete(s)}>
+                      삭제
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
