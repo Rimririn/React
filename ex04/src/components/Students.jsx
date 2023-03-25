@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Col, Row, Table, Button } from "react-bootstrap";
+import StuInsert from "./StuInsert";
 
 const Students = () => {
   const [students, setStudents] = useState([
@@ -35,6 +36,7 @@ const Students = () => {
       <h1>학생관리</h1>
       <Row className="justify-content-center my-5">
         <Col md={8} className="px-5">
+          <StuInsert setStudents={setStudents} students={students} />
           <Table striped bordered hover>
             <thead className="text-center">
               <tr>

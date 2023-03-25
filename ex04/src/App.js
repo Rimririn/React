@@ -6,7 +6,7 @@ import Students from "./components/Students";
 function App() {
   return (
     <div className="App">
-      {/* <Students /> */}
+      <Students />
       <Products />
     </div>
   );
