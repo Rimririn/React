@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nanum+Pen+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap");
 
 .App {
-  font-family: "Nanum Pen Script", cursive;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 h1 {

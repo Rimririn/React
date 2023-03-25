@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Table, Button } from "react-bootstrap";
+import ProInsert from "./ProInsert";
 
 const Products = () => {
   const [products, setProducts] = useState([
@@ -23,6 +24,7 @@ const Products = () => {
       <h1>상품관리</h1>
       <Row className="justify-content-center my-5">
         <Col md={10}>
+          <ProInsert setProducts={setProducts} products={products} />
           <Table striped bordered hover className="px-2">
             <thead>
               <tr>
