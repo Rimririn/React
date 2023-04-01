@@ -1,70 +1,85 @@
-# Getting Started with Create React App
+# 인하대학교 VR/AR
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+인하대 VR/AR 리엑트 4주차 강의
 
-## Available Scripts
+## 강의 요약
 
-In the project directory, you can run:
+react-bootstrap 사용
+useState 사용
+데이터 추가 삭제
 
-### `yarn start`
+### `react-bootstrap`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    yarn add react-bootstrap bootstrap
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `yarn test`
+    import "bootstrap/dist/css/bootstrap.min.css";
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 설치 후 index.js에 import
+- [https://react-bootstrap.netlify.app/getting-started/introduction](https://react-bootstrap.netlify.app/getting-started/introduction)
 
-### `yarn build`
+### 삭제
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    setStudents(students.filter((s) => s.no !== student.no));
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- filter 함수로 state 삭제
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 등록
 
-### `yarn eject`
+    const last = useRef(5);
+    const [form, setForm] = useState({
+        no: last.current,
+        name: "고진호",
+        dept: "소융과",
+    });
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    const { no, name, dept } = form;
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    const onChangeForm = (e) => {
+        setForm({
+        ...form,
+        [e.target.name]: e.target.value,
+        });
+    };
+    const onRegister = (e) => {
+        e.preventDefault();
+        if (window.confirm(`${name} 상품을 등록하시겠습니까?`)) {
+        setStudents(students.concat(form));
+        setForm({ no: ++last.current, name: "", dept: "" });
+        }
+    };
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    return (
+        <Card className="my-3">
+        <Card.Title className="text-center py-2">
+            <h3>학생등록</h3>
+        </Card.Title>
+        <Card.Body>
+            <Form className="text-center" onSubmit={onRegister}>
+            <Form.Control
+                onChange={onChangeForm}
+                value={no}
+                name="no"
+                className="my-2"
+                placeholder="학번"
+            />
+            <Form.Control
+                onChange={onChangeForm}
+                value={name}
+                name="name"
+                className="my-2"
+                placeholder="이름"
+            />
+            <Form.Control
+                onChange={onChangeForm}
+                value={dept}
+                name="price"
+                className="my-2"
+                placeholder="학과"
+            />
+            <Button type="submit">학생등록</Button>
+            </Form>
+        </Card.Body>
+        </Card>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- form 입력 받아서 concat으로 추가
