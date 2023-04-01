@@ -14,8 +14,10 @@ yarn add react-router-dom@5.3.0
 
 ### `Link`
 
-    <Link to="/">HOME</Link> to에 입력한 경로로 이동 => url이 뒤에 추가가 됨
-    / : 루트 경로
+    <Link to="/">HOME</Link>
+
+- to에 입력한 경로로 이동 => url이 뒤에 추가가 됨
+- / : 루트 경로
 
 ### `Route`
 
