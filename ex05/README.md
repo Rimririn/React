@@ -10,7 +10,11 @@ yarn add react-router-dom@5.3.0
 
 ### `BrowserRouter`
 
-<BrowserRouter>태그로 App 컴포넌트를 감싸야 됨
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+
+- BrowserRouter 태그로 App 컴포넌트를 감싸야 됨
 
 ### `Link`
 
