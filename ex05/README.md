@@ -14,16 +14,16 @@ yarn add react-router-dom@5.3.0
 
 ### `Link`
 
-<Link to="/">HOME</Link> to에 입력한 경로로 이동 => url이 뒤에 추가가 됨
-/ : 루트 경로
+- <Link to="/">HOME</Link> to에 입력한 경로로 이동 => url이 뒤에 추가가 됨
+  / : 루트 경로
 
 ### `Route`
 
-<Switch>
-    <Route path="/" component={HomePage} exact={true} />
-    <Route path="/posts" component={PostsPage} />
-    <Route path="/todos" component={TodosPage} />
-</Switch>
+- <Switch>
+      <Route path="/" component={HomePage} exact={true} />
+      <Route path="/posts" component={PostsPage} />
+      <Route path="/todos" component={TodosPage} />
+  </Switch>
 
 - Switch 태그로 감싸고 Route 태그로 경로에 따른 페이지 설정
 
