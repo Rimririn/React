@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Table } from "react-bootstrap";
+import { Row, Col, Table, Button } from "react-bootstrap";
 
 const PostsPage = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [last, setLast] = useState(1);
 
   const getPosts = () => {
     setLoading(true);
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((response) => response.json())
       .then((json) => {
-        setList(json);
+        let start = (page - 1) * 5 + 1;
+        let end = page * 5;
+        setLast(Math.ceil(json.length / 5));
+        setList(json.filter((post) => post.id >= start && post.id <= end));
         setLoading(false);
       });
   };
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [page]);
 
   if (loading) return <h1>로딩중입니다...</h1>;
   return (
@@ -32,8 +37,8 @@ const PostsPage = () => {
             </tr>
           </thead>
           <tbody>
-            {list.map((post, index) => (
-              <tr key={index}>
+            {list.map((post) => (
+              <tr key={post.id}>
                 <td>{post.id}</td>
                 <td>
                   <div className="ellipsis">{post.title}</div>
@@ -42,6 +47,23 @@ const PostsPage = () => {
             ))}
           </tbody>
         </Table>
+        <div className="text-center my-3">
+          <Button
+            disabled={page === 1 && true}
+            onClick={() => setPage(page - 1)}
+          >
+            이전
+          </Button>
+          <span className="px-3">
+            {page} / {last}
+          </span>
+          <Button
+            disabled={page === last && true}
+            onClick={() => setPage(page + 1)}
+          >
+            다음
+          </Button>
+        </div>
       </Col>
     </Row>
   );
