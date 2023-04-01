@@ -1,10 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Row, Col, Table } from "react-bootstrap";
 
 const PostsPage = () => {
+  const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getPosts = () => {
+    setLoading(true);
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => response.json())
+      .then((json) => {
+        setList(json);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  if (loading) return <h1>로딩중입니다...</h1>;
   return (
-    <div>
-      <h1>게시글</h1>
-    </div>
+    <Row className="justify-content-center mx-3 ">
+      <Col md={10}>
+        <h1 className="text-center my-5">게시글</h1>
+        <Table striped bordered hover>
+          <thead>
+            <tr className="text-center">
+              <td>ID.</td>
+              <td>Title</td>
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((post, index) => (
+              <tr key={index}>
+                <td>{post.id}</td>
+                <td>
+                  <div className="ellipsis">{post.title}</div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Col>
+    </Row>
   );
 };
 

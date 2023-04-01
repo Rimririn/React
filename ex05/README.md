@@ -35,4 +35,12 @@ yarn add react-router-dom@5.3.0
 
 - path : 경로, component : 렌더링 할 컴포넌트, exact : true 일 경우 주소가 완전히 같을 경우만 허용
 
-### `yarn eject`
+### `useEffect`
+
+    useEffect(() => {
+        getPosts();
+    }, []);
+
+- 렌더링 될때 마다 호출
+- [] 조건을 추가하여 처음 한번만 실행
+- 특정 state가 변할 때 실행을 원할 경우 []에 값 추가
