@@ -8,6 +8,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { Link, Route, Switch } from "react-router-dom";
 import BookPage from "./BookPage";
 import HomePage from "./HomePage";
+import LocalPage from "./LocalPage";
 
 const RouterPage = () => {
   return (
@@ -19,11 +20,12 @@ const RouterPage = () => {
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
+              style={{ maxHeight: "100%" }}
               navbarScroll
             >
-              <Link to="/">홈</Link>
+              <Link to="/">Home</Link>
               <Link to="/book">도서검색</Link>
+              <Link to="/local">지역검색</Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -31,6 +33,7 @@ const RouterPage = () => {
       <Switch>
         <Route path="/" component={HomePage} exact={true} />
         <Route path="/book" component={BookPage} />
+        <Route path="/local" component={LocalPage} />
       </Switch>
     </>
   );

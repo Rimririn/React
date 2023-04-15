@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Row, Col, Button, Form } from "react-bootstrap";
+import { Row, Col, Button, Form, Card } from "react-bootstrap";
 import axios from "axios";
+import Book from "./Book";
 
 const BookPage = () => {
   const ref_query = useRef(null);
@@ -15,7 +16,7 @@ const BookPage = () => {
     const url = "https://dapi.kakao.com/v3/search/book?target=title";
     const config = {
       headers: { Authorization: "KakaoAK 1516d2c502f56b88f702da4d62d772a5" },
-      params: { query: query, size: 6, page: page },
+      params: { query: query, size: 8, page: page },
     };
 
     setLoading(true);
@@ -24,7 +25,6 @@ const BookPage = () => {
     setBooks(result.data.documents);
     setTotal(result.data.meta.pageable_count);
     setIs_end(result.data.meta.is_end);
-
     setLoading(false);
     console.log(result);
 
@@ -39,13 +39,14 @@ const BookPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setPage(1);
     getBooks();
   };
 
   return (
-    <Row className="my-5">
+    <Row className="my-5 mx=2">
       <Row>
-        <Col>
+        <Col className="mb-2" md={3}>
           <Form onSubmit={onSubmit}>
             <Form.Control
               ref={ref_query}
@@ -55,7 +56,7 @@ const BookPage = () => {
             />
           </Form>
         </Col>
-        <Col>검색 수 : {total}건</Col>
+        {/* <Col>검색 수 : {total}건</Col> */}
       </Row>
       <hr />
       <Col>
@@ -63,28 +64,38 @@ const BookPage = () => {
 
         <Row>
           {books.map((book) => (
-            <Col className="box m-2" key={book.isbn}>
-              <img
-                src={
-                  book.thumbnail
-                    ? book.thumbnail
-                    : "https://via.placeholder.com/120x170/"
-                }
-                alt=""
-              />
-              <div className="ellipsis">{book.title}</div>
-              <div>{book.price}원</div>
+            <Col className="my-2" md={3} xs={6} key={book.isbn}>
+              <Card>
+                <Card.Body>
+                  <img
+                    src={
+                      book.thumbnail
+                        ? book.thumbnail
+                        : "https://via.placeholder.com/120x170/"
+                    }
+                    alt=""
+                  />
+                  <div className="ellipsis">{book.title}</div>
+
+                  <Book book={book} />
+                </Card.Body>
+              </Card>
             </Col>
           ))}
           <div className="text-center my-3">
             <Button
               disabled={page === 1 ? true : false}
               onClick={() => setPage(page - 1)}
+              className="btn-sm"
             >
               이전
             </Button>
-            <span className="mx-3">{page}</span>
-            <Button disabled={is_end && true} onClick={() => setPage(page + 1)}>
+            <span className="px-3">{page}</span>
+            <Button
+              disabled={is_end && true}
+              onClick={() => setPage(page + 1)}
+              className="btn-sm"
+            >
               다음
             </Button>
           </div>
