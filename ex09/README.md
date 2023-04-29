@@ -14,10 +14,28 @@
 
     yarn add react-bootstrap bootstrap axios react-router-dom@5.3.0
 
-### `부트 스트랩 모달 `
+### `카카오 지역검색 API `
 
-- [https://react-bootstrap.netlify.app/docs/components/modal](https://react-bootstrap.netlify.app/docs/components/modal)
+- LocalPage.jsx 파일
+- 카카오 개발자 문서 : 지역 검색 REST API
+- [https://developers.kakao.com/docs/latest/ko/local/dev-guide](https://developers.kakao.com/docs/latest/ko/local/dev-guide)
 
-- Book.jsx 파일
+- MapPage.jsx
+- 리엑트 부트스트랩 모달
+- 지도 출력 : 카카오 지도 API [https://apis.map.kakao.com/web/guide/](https://apis.map.kakao.com/web/guide/)
 
-- 카카오 개발자 문서 : 책 검색 REST API [https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide](https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide)
+- yarn add react-kakao-maps-sdk
+
+- 사용 예시
+
+        import { Map, MapMarker } from "react-kakao-maps-sdk";
+
+        <Map
+          center={{ lat: local.y, lng: local.x }}
+          style={{ width: "100%", height: "360px" }}
+        >
+          <MapMarker position={{ lat: local.y, lng: local.x }}>
+              <div style={{ color: "#000" }}>{local.address_name}
+              </div>
+          </MapMarker>
+        </Map>
