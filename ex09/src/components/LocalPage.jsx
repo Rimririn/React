@@ -1,27 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Table } from "react-bootstrap";
+import { Row, Col, Table, Form, Button } from "react-bootstrap";
 import axios from "axios";
 
 const LocalPage = () => {
   const [locals, setLocals] = useState([]);
+  const [query, setQurey] = useState("인하대학교");
   const [loading, setLoading] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [is_end, setIs_end] = useState(false);
 
   const getLocal = async () => {
     const url = "https://dapi.kakao.com/v2/local/search/keyword.json";
     const config = {
       headers: { Authorization: "KakaoAK 1516d2c502f56b88f702da4d62d772a5" },
-      params: { query: "인하대학교", size: 5, page: 1 },
+      params: { query: query, size: 5, page: page },
     };
     setLoading(true);
     const result = await axios.get(url, config);
     setLoading(false);
     console.log(result);
     setLocals(result.data.documents);
+    setTotal(result.data.meta.pageable_count);
+    setIs_end(result.data.meta.is_end);
+  };
+
+  const onSearch = (e) => {
+    e.preventDefault();
+    getLocal();
   };
 
   useEffect(() => {
     getLocal();
-  }, []);
+  }, [page]);
 
   if (loading) return <h1 className="text-center my-5">로딩중....</h1>;
 
@@ -29,6 +40,18 @@ const LocalPage = () => {
     <Row>
       <Col>
         <h1 className="text-center my-5">지역검색</h1>
+        <Row className="my-2">
+          <Col md={3} xs={6}>
+            <Form onSubmit={onSearch}>
+              <Form.Control
+                placeholder="검색어"
+                value={query}
+                onChange={(e) => setQurey(e.target.value)}
+              />
+            </Form>
+          </Col>
+          <Col>검색수 : {total} 건</Col>
+        </Row>
         <Table striped bordered hover>
           <thead>
             <tr className="text-center">
@@ -47,6 +70,18 @@ const LocalPage = () => {
             ))}
           </tbody>
         </Table>
+        <div className="text-center my-2">
+          <Button
+            disabled={page === 1 ? true : false}
+            onClick={() => setPage(page - 1)}
+          >
+            이전
+          </Button>
+          <span className="mx-3">{page}</span>
+          <Button disabled={is_end} onClick={() => setPage(page + 1)}>
+            다음
+          </Button>
+        </div>
       </Col>
     </Row>
   );
